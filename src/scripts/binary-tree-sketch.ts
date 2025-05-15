@@ -45,8 +45,11 @@ const sketch = (p5: P5) => {
     }
 
     function init(p5: P5) {
-        const tree = new RBinaryTree<number, string>(p5);
+        const tree = new RBinaryTree<number, string>();
         tree.addVertex(5, 'u');
+        tree.addVertex(2);
+        tree.addVertex(8);
+        tree.addVertex(3, '33');
         console.log(tree);
     }
 };

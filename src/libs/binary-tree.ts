@@ -1,25 +1,49 @@
-import P5 from 'p5';
-import { TBinaryTreeVertex } from 'src/utils/types';
+import { TBinaryTree, TBinaryTreeVertex } from 'src/utils/types';
 
-const v1: TBinaryTreeVertex<number, number> = {
-    id: 1,
-    label: 1,
-    edges: [undefined, undefined],
-    data: 3
-};
+class RBinaryTreeVertex<T = unknown, K = undefined> implements TBinaryTreeVertex<T, K> {
+    id: number;
+    label: T;
+    edges: [TBinaryTreeVertex<T, K>?, TBinaryTreeVertex<T, K>?];
+    data: K | undefined;
 
-class RBinaryTree<T = unknown, K = undefined> {
-    private p5: P5;
-    private root?: TBinaryTreeVertex<T, K>;
+    constructor(label: T, data?: K) {
+        this.label = label;
+        this.data = data;
+        this.edges = [undefined, undefined];
+    }
 
-    constructor(p5: P5) {
-        this.p5 = p5;
+    addVertex(value: T): TBinaryTreeVertex<T, undefined>;
+    addVertex(value: T, data: Exclude<K, undefined>): TBinaryTreeVertex<T, K>;
+
+    addVertex(value: T, data?: K): TBinaryTreeVertex<T, K> {
+        if (value < this.label) {
+            if (this.edges[0] === undefined) {
+                return (this.edges[0] = new RBinaryTreeVertex(value, data));
+            } else {
+                return this.edges[0].addVertex(value, data);
+            }
+        } else if (value > this.label) {
+            if (this.edges[1] === undefined) {
+                return (this.edges[1] = new RBinaryTreeVertex(value, data));
+            } else {
+                return this.edges[1].addVertex(value, data);
+            }
+        }
+        return this;
+    }
+}
+class RBinaryTree<T = unknown, K = undefined> implements TBinaryTree<T, K> {
+    root?: TBinaryTreeVertex<T, K>;
+
+    constructor() {
         this.root = undefined;
     }
 
-    addVertex(label: T, data?: K): RBinaryTree<T, K> {
+    addVertex(value: T, data?: K): TBinaryTree<T, K> {
         if (!this.root) {
-            this.root = { id: 0, label, data, edges: [undefined, undefined] };
+            this.root = new RBinaryTreeVertex(value, data);
+        } else {
+            this.root.addVertex(value, data);
         }
         return this;
     }
