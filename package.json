@@ -1,0 +1,50 @@
+{
+    "name": "ai-ml-tuts",
+    "version": "0.1.0",
+    "description": "An collection of code snippets to attempt to learn AI & ML in Javascript",
+    "source": "src/index.html",
+    "scripts": {
+        "start": "rm -rf .parcel-cache && parcel src/*.html --public-url / --open",
+        "build": "parcel build src/*.html --no-cache --public-url ./",
+        "predeploy": "rm -rf dist && parcel build src/*.html --no-cache --public-url ./",
+        "deploy": "gh-pages -d dist",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "@types/dat.gui": "^0.7.12",
+        "@types/p5": "^1.7.6",
+        "@typescript-eslint/eslint-plugin": "^8.31.0",
+        "@typescript-eslint/parser": "^8.31.0",
+        "eslint": "^9.25.1",
+        "eslint-config-prettier": "^10.1.2",
+        "eslint-plugin-prettier": "^5.1.3",
+        "parcel": "^2.11.0",
+        "prettier": "^3.2.4",
+        "typescript": "^5.8.3"
+    },
+    "dependencies": {
+        "@tailwindcss/postcss": "^4.1.4",
+        "dat.gui": "^0.7.9",
+        "gh-pages": "^6.1.1",
+        "p5": "^1.11.5",
+        "tailwindcss": "^4.1.4"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rans0000/AI-ML-Tuts.git"
+    },
+    "keywords": [
+        "JS",
+        "Typescript",
+        "AI",
+        "ML",
+        "ML5JS",
+        "TensorflowJS"
+    ],
+    "author": "rans0000@gmail.com",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/rans0000/AI-ML-Tuts/issues"
+    },
+    "homepage": "https://github.com/rans0000/AI-ML-Tuts#readme"
+}
