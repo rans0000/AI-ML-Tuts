@@ -10,11 +10,12 @@ export type TVertex<T = unknown, K = undefined> = {
 export type TBinaryTreeVertex<T = unknown, K = undefined> = Omit<TVertex<T, K>, 'edges' | 'addVertex'> & {
     edges: [left?: TBinaryTreeVertex<T, K>, right?: TBinaryTreeVertex<T, K>];
     addVertex(value: T, data?: K): TBinaryTreeVertex<T, K>;
-    visit(list: TBinaryTreeVertex<T, K>[]): TBinaryTreeVertex<T, K>[];
+    visit(list: TBinaryTreeVertex<T, K>[], currDepth: number): { list: TBinaryTreeVertex<T, K>[]; maxDepth: number };
 };
 
 export type TBinaryTree<T = unknown, K = undefined> = {
     root?: TBinaryTreeVertex<T, K>;
+
     addVertex(value: T, data?: K): TBinaryTree<T, K>;
-    traverse(): TBinaryTreeVertex<T, K>[];
+    traverse(): { list: TBinaryTreeVertex<T, K>[]; maxDepth: number };
 };

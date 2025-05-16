@@ -31,15 +31,27 @@ class RBinaryTreeVertex<T = unknown, K = undefined> implements TBinaryTreeVertex
         return this;
     }
 
-    visit(list: TBinaryTreeVertex<T, K>[]): TBinaryTreeVertex<T, K>[] {
+    visit(list: TBinaryTreeVertex<T, K>[], currDepth: number): { list: TBinaryTreeVertex<T, K>[]; maxDepth: number } {
+        currDepth++;
+        let maxDepthL = -1;
+        let maxDepthR = -1;
+
         if (this.edges[0] !== undefined) {
-            list = this.edges[0].visit(list);
+            ({ list, maxDepth: maxDepthL } = this.edges[0].visit(list, currDepth));
         }
         list.push(this);
         if (this.edges[1] !== undefined) {
-            list = this.edges[1].visit(list);
+            ({ list, maxDepth: maxDepthR } = this.edges[1].visit(list, currDepth));
         }
-        return list;
+        const maxDepth =
+            maxDepthL > maxDepthR
+                ? maxDepthL > currDepth
+                    ? maxDepthL
+                    : currDepth
+                : maxDepthR > currDepth
+                  ? maxDepthR
+                  : currDepth;
+        return { list, maxDepth };
     }
 }
 class RBinaryTree<T = unknown, K = undefined> implements TBinaryTree<T, K> {
@@ -58,9 +70,9 @@ class RBinaryTree<T = unknown, K = undefined> implements TBinaryTree<T, K> {
         return this;
     }
 
-    traverse(): TBinaryTreeVertex<T, K>[] {
+    traverse(): { list: TBinaryTreeVertex<T, K>[]; maxDepth: number } {
         let list: TBinaryTreeVertex<T, K>[] = [];
-        return this.root ? this.root?.visit(list) : list;
+        return this.root ? this.root.visit(list, 0) : { list, maxDepth: 0 };
     }
 }
 
