@@ -14,7 +14,6 @@ class RBinaryTreeVertex<T = unknown, K = undefined> implements TBinaryTreeVertex
 
     addVertex(value: T): TBinaryTreeVertex<T, undefined>;
     addVertex(value: T, data: Exclude<K, undefined>): TBinaryTreeVertex<T, K>;
-
     addVertex(value: T, data?: K): TBinaryTreeVertex<T, K> {
         if (value < this.label) {
             if (this.edges[0] === undefined) {
@@ -31,6 +30,17 @@ class RBinaryTreeVertex<T = unknown, K = undefined> implements TBinaryTreeVertex
         }
         return this;
     }
+
+    visit(list: TBinaryTreeVertex<T, K>[]): TBinaryTreeVertex<T, K>[] {
+        if (this.edges[0] !== undefined) {
+            list = this.edges[0].visit(list);
+        }
+        list.push(this);
+        if (this.edges[1] !== undefined) {
+            list = this.edges[1].visit(list);
+        }
+        return list;
+    }
 }
 class RBinaryTree<T = unknown, K = undefined> implements TBinaryTree<T, K> {
     root?: TBinaryTreeVertex<T, K>;
@@ -46,6 +56,11 @@ class RBinaryTree<T = unknown, K = undefined> implements TBinaryTree<T, K> {
             this.root.addVertex(value, data);
         }
         return this;
+    }
+
+    traverse(): TBinaryTreeVertex<T, K>[] {
+        let list: TBinaryTreeVertex<T, K>[] = [];
+        return this.root ? this.root?.visit(list) : list;
     }
 }
 

@@ -51,6 +51,7 @@ const sketch = (p5: P5) => {
         tree.addVertex(8);
         tree.addVertex(3, '33');
         console.log(tree);
+        console.log(tree.traverse());
     }
 };
 
