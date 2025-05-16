@@ -11,6 +11,7 @@ export type TBinaryTreeVertex<T = unknown, K = undefined> = Omit<TVertex<T, K>, 
     edges: [left?: TBinaryTreeVertex<T, K>, right?: TBinaryTreeVertex<T, K>];
     addVertex(value: T, data?: K): TBinaryTreeVertex<T, K>;
     visit(list: TBinaryTreeVertex<T, K>[], currDepth: number): { list: TBinaryTreeVertex<T, K>[]; maxDepth: number };
+    search(value: T): TBinaryTreeVertex<T, K> | null;
 };
 
 export type TBinaryTree<T = unknown, K = undefined> = {
@@ -18,4 +19,5 @@ export type TBinaryTree<T = unknown, K = undefined> = {
 
     addVertex(value: T, data?: K): TBinaryTree<T, K>;
     traverse(): { list: TBinaryTreeVertex<T, K>[]; maxDepth: number };
+    search(value: T): TBinaryTreeVertex<T, K> | null;
 };

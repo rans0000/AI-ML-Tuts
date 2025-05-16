@@ -53,6 +53,18 @@ class RBinaryTreeVertex<T = unknown, K = undefined> implements TBinaryTreeVertex
                   : currDepth;
         return { list, maxDepth };
     }
+
+    search(value: T): TBinaryTreeVertex<T, K> | null {
+        if (value === this.label) {
+            // console.log('found!!', this);
+            return this;
+        } else if (value < this.label && this.edges[0] !== undefined) {
+            return this.edges[0].search(value);
+        } else if (value > this.label && this.edges[1] !== undefined) {
+            return this.edges[1].search(value);
+        }
+        return null;
+    }
 }
 class RBinaryTree<T = unknown, K = undefined> implements TBinaryTree<T, K> {
     root?: TBinaryTreeVertex<T, K>;
@@ -73,6 +85,10 @@ class RBinaryTree<T = unknown, K = undefined> implements TBinaryTree<T, K> {
     traverse(): { list: TBinaryTreeVertex<T, K>[]; maxDepth: number } {
         let list: TBinaryTreeVertex<T, K>[] = [];
         return this.root ? this.root.visit(list, 0) : { list, maxDepth: 0 };
+    }
+
+    search(value: T): TBinaryTreeVertex<T, K> | null {
+        return this.root ? this.root.search(value) : null;
     }
 }
 

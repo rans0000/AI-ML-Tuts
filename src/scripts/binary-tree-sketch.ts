@@ -53,6 +53,8 @@ const sketch = (p5: P5) => {
         tree.addVertex(9);
         console.log(tree);
         console.log(tree.traverse());
+        console.log('searching for 7', tree.search(7));
+        console.log('searching for 99', tree.search(99));
     }
 };
 
